@@ -18,6 +18,13 @@ sudo sysctl --system
 curl -fsSL https://get.docker.com -o get-docker.sh
 sh get-docker.sh
 
+#change the log driver to systemd and restart docker
+cat <<EOF |  sudo tee /etc/docker/daemon.json
+{
+  "exec-opts": ["native.cgroupdriver=systemd"]
+}
+EOF
+ systemctl restart docker
 #Installing kubeadm, kubelet and kubectl
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl
@@ -27,3 +34,10 @@ sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 
+#init kuberadm cluster
+ kubeadm reset -f
+ kubeadm init --pod-network-cidr=10.100.0.0/16
+
+ export KUBECONFIG=/etc/kubernetes/admin.conf
+
+ 
