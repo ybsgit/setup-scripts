@@ -35,9 +35,5 @@ sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 
 #init kuberadm cluster
- kubeadm reset -f
- kubeadm init --pod-network-cidr=10.100.0.0/16
 
- export KUBECONFIG=/etc/kubernetes/admin.conf
 
- 
